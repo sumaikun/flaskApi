@@ -1,0 +1,43 @@
+##### For local
+
+1. Initialize env
+    -> virtualenv venv --system-site-packages
+    -> source venv/bin/activate
+2. Install flask
+    -> pip3 install Flask
+
+#### Docker
+    -> docker-compose up --build
+
+
+### Run
+
+    -> Setup env var --> export FLASK_APP=index.py
+    -> Run server: flask run
+
+
+### Environments with .env file
+
+    --> pip install python-dotenv
+
+### mongo for python
+
+    -> pip install bson
+    -> pip install flask_pymongo
+
+## jwt dependencies
+
+    -> pip install flask_jwt_extended
+    -> pip install flask_bcrypt
+
+# enable autoreload
+
+    -> FLASK_APP=index.py FLASK_ENV=development flask run
+
+#aws
+
+    -> pip install Flask-Cognito
+
+#using cli
+
+    -> aws cognito-idp admin-set-user-password --user-pool-id us-east-1_4TPzUCO9M --username jesustest --password Prueba1234. --permanent
