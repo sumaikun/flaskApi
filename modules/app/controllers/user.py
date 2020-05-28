@@ -10,6 +10,7 @@ import datetime
 import json
 from bson.json_util import dumps, loads
 import boto3
+from app.annotations import check_cognito_header, check_cognito_user
 
 user_pool_id = os.environ.get('COGNITO_POOL_ID')
 
@@ -25,9 +26,9 @@ LOG = logger.get_root_logger(
 @jwt.unauthorized_loader
 def unauthorized_response(callback):
     return jsonify({
-        'ok': False,
         'message': 'Missing Authorization Header'
     }), 401
+
 
 
 @app.route('/AlternativeAuth', methods=['POST'])
@@ -105,7 +106,11 @@ def register():
 
 @app.route('/users', methods=['GET', 'POST'])
 #@jwt_required
+@check_cognito_header()
+@check_cognito_user()
 def users():
+    ''' example to get extra data from annotation '''
+    #print("extraData",request.extraData)
     ''' route read user '''
     if request.method == 'GET':
         query = request.args
@@ -125,6 +130,7 @@ def users():
             return jsonify({'message': 'Bad request parameters: {}'.format(data['message'])}), 400
 
 @app.route('/users/<id>', methods=['GET', 'DELETE','PUT'])
+@check_cognito_header()
 #@jwt_required
 def user(id):
     

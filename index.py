@@ -10,6 +10,7 @@ sys.path.append(os.path.join(ROOT_PATH, 'modules'))
 
 import logger  
 
+
 LOG = logger.get_root_logger(os.environ.get(
     'ROOT_LOGGER', 'root'), filename=os.path.join(ROOT_PATH, 'output.log'))
 
