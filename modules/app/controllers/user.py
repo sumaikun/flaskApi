@@ -3,7 +3,7 @@ from flask import request, jsonify
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity)
 from app import app, mongo, flask_bcrypt, jwt
-from app.schemas import validate_user
+from app.schemas import validate_user, validate_login
 import logger
 from bson.objectid import ObjectId
 import datetime
@@ -34,7 +34,7 @@ def unauthorized_response(callback):
 @app.route('/AlternativeAuth', methods=['POST'])
 def al_auth_user():
     ''' auth endpoint '''
-    data = validate_user(request.get_json())
+    data = validate_login(request.get_json())
     if data['ok']:
         data = data['data']
         user = mongo.db.users.find_one({'email': data['email']}, {"_id": 0})
@@ -55,7 +55,7 @@ def al_auth_user():
 @app.route('/auth', methods=['POST'])
 def auth_user():
 
-    data = validate_user(request.get_json())
+    data = validate_login(request.get_json())
 
     if data['ok']:
         data = data['data']
@@ -93,9 +93,13 @@ def register():
     if len == 0:
         data = validate_user(request.get_json())
         if data['ok']:
+            
             data = data['data']
-            data['password'] = flask_bcrypt.generate_password_hash(
-                data['password'])
+            
+            if data['password'] != None: 
+                data['password'] = flask_bcrypt.generate_password_hash(
+                    data['password'])
+
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:

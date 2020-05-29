@@ -8,6 +8,15 @@ user_schema = {
         "name": {
             "type": "string",
         },
+        "lastName": {
+            "type": "string",
+        },
+        "documentType": {
+            "type": "string",
+        },
+        "documentNumber": {
+            "type": "number",
+        },
         "email": {
             "type": "string",
             "format": "email",
@@ -15,9 +24,25 @@ user_schema = {
         "password": {
             "type": "string",
             "minLength": 5
-        }
+        },
+        "photoUrl": {
+            "type": "string",
+        },
+        "typeUser": {
+            "type": "string",
+        },
+        "phone": {
+            "type": "string",
+        },
+        "cellPhone": {
+            "type": "string",
+        },
+        "accountId": {
+            "type": "string",
+        },
+
     },
-    "required": ["email", "password"],
+    "required": ["email", "name", "lastName", "documentType", "documentNumber", "typeUser"],
     "additionalProperties": False
 }
 
