@@ -12,10 +12,11 @@ user_schema = {
             "type": "string",
         },
         "documentType": {
-            "type": "string",
+            "type" : "string",
+            "enum" : ["CC", "CE","NIT"]
         },
         "documentNumber": {
-            "type": "number",
+            "type": "string",
         },
         "email": {
             "type": "string",
@@ -28,21 +29,27 @@ user_schema = {
         "photoUrl": {
             "type": "string",
         },
-        "typeUser": {
+        "role": {
             "type": "string",
         },
         "phone": {
-            "type": "string",
+            "type": "string",            
         },
         "cellPhone": {
             "type": "string",
+            "minLength": 10,
+            "maxlength":10
         },
         "accountId": {
             "type": "string",
         },
+        "userType":{
+            "type" : "string",
+            "enum" : ["Supplier", "Seller"]
+        }
 
     },
-    "required": ["email", "name", "lastName", "documentType", "documentNumber", "typeUser"],
+    "required": ["email", "name", "lastName", "documentType", "documentNumber", "role","userType"],
     "additionalProperties": False
 }
 

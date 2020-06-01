@@ -26,7 +26,7 @@ def check_cognito_header():
                     return rv
 
                 except Exception as exc:
-
+                    print(exc)
                     return jsonify({
                     'message': 'Invalid token'
                 }), 403

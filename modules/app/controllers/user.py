@@ -111,7 +111,7 @@ def register():
 @app.route('/users', methods=['GET', 'POST'])
 #@jwt_required
 @check_cognito_header()
-@check_cognito_user()
+#@check_cognito_user()
 def users():
     ''' example to get extra data from annotation '''
     #print("extraData",request.extraData)
@@ -126,8 +126,9 @@ def users():
         data = validate_user(request.get_json())
         if data['ok']:
             data = data['data']
-            data['password'] = flask_bcrypt.generate_password_hash(
-                data['password'])
+            if 'password' in data:
+                data['password'] = flask_bcrypt.generate_password_hash(
+                    data['password'])
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:
@@ -161,8 +162,9 @@ def user(id):
         data = validate_user(request.get_json())
         if data['ok']:
             data = data['data']
-            data['password'] = flask_bcrypt.generate_password_hash(
-                data['password'])
+            if 'password' in data:            
+                data['password'] = flask_bcrypt.generate_password_hash(
+                    data['password'])
             db_response = mongo.db.users.update_one({"_id":ObjectId(id)}, {'$set':data})
             #print("response",db_response.matched_count)
             if db_response.matched_count > 0:            
