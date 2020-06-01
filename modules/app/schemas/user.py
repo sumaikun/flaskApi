@@ -29,8 +29,9 @@ user_schema = {
         "photoUrl": {
             "type": "string",
         },
-        "role": {
+        "userRole": {
             "type": "string",
+            "enum" : ["OWNER"]
         },
         "phone": {
             "type": "string",            
@@ -43,7 +44,7 @@ user_schema = {
         "accountId": {
             "type": "string",
         },
-        "userType":{
+        "userProfile":{
             "type" : "string",
             "enum" : ["Supplier", "Seller"]
         }
