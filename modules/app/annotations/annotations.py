@@ -1,7 +1,14 @@
 from functools import wraps
 from flask import request, jsonify
 import boto3
+import logger
+import os
+
 cognito_client = boto3.client('cognito-idp')
+
+ROOT_PATH = os.environ.get('ROOT_PATH')
+LOG = logger.get_root_logger(
+    __name__, filename=os.path.join(ROOT_PATH, 'output.log'))
 
 def check_cognito_header():
     def decorator(f):
@@ -20,13 +27,18 @@ def check_cognito_header():
                         AccessToken=token
                     )
 
-                    #print("user got",response)
+                    #print("user got",response['UserAttributes'])
 
+                    for element in response['UserAttributes']:
+
+                        if element['Name'] == 'email':
+                            request.TokenEmail = element['Value']
+                        
                     rv = f(*args, **kwargs)
                     return rv
 
                 except Exception as exc:
-                    print(exc)
+                    LOG.error(exc)
                     return jsonify({
                     'message': 'Invalid token'
                 }), 403
