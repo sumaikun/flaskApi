@@ -39,7 +39,7 @@ user_schema = {
         "cellPhone": {
             "type": "string",
             "minLength": 10,
-            "maxlength":11
+            "maxlength":13
         },
         "accountId": {
             "type": "string",

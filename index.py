@@ -2,6 +2,7 @@ import os
 import sys
 from flask import Flask, jsonify, request, make_response, send_from_directory
 from dotenv import load_dotenv
+from flask_cors import CORS
 load_dotenv()
 
 ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -19,6 +20,8 @@ PORT = os.environ.get('PORT')
 #app = Flask(__name__)
 
 from app import app 
+
+CORS(app)
 
 @app.route('/')
 def index():

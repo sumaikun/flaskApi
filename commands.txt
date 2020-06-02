@@ -3,6 +3,7 @@
 1. Initialize env
     -> virtualenv venv --system-site-packages
     -> source venv/bin/activate
+    -> .\venv\Scripts\activate
 2. Install flask
     -> pip3 install Flask
 
@@ -13,6 +14,7 @@
 ### Run
 
     -> Setup env var --> export FLASK_APP=index.py
+    -> windows: set FLASK_APP=index.py
     -> Run server: flask run
 
 

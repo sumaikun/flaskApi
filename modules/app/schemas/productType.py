@@ -17,7 +17,7 @@ productType_schema = {
 }
 
 
-def validate_collection(data):
+def validate_productType(data):
     try:
         validate(data, productType_schema)
     except ValidationError as e:
