@@ -3,6 +3,7 @@ from flask import request, jsonify
 import boto3
 import logger
 import os
+from app import mongo
 
 cognito_client = boto3.client('cognito-idp')
 
@@ -51,6 +52,16 @@ def check_cognito_user():
         @wraps(f)
         def decorated_function(*args, **kwargs):
             #request.extraData = "something"
+            data = mongo.db.users.find_one({"email":request.TokenEmail})
+            if data != None:
+
+                request.tokenUserId = data['_id']
+                #print("data",request.tokenUserId)
+            else:
+                return jsonify({
+                    'message': 'Invalid user'
+                }), 403
+                            
             rv = f(*args, **kwargs)
             return rv
         return decorated_function

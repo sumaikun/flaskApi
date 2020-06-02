@@ -111,7 +111,6 @@ def register():
 @app.route('/users', methods=['GET', 'POST'])
 #@jwt_required
 @check_cognito_header()
-#@check_cognito_user()
 def users():
     ''' example to get extra data from annotation '''
     #print("extraData",request.extraData)
@@ -146,7 +145,7 @@ def user(id):
     if request.method == 'GET':
         query = request.args
         data = mongo.db.users.find_one({"_id":ObjectId(id)})
-        print("data",data)
+        #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200
     

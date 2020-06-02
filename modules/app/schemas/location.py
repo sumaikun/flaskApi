@@ -2,29 +2,32 @@ from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from jsonschema.exceptions import SchemaError
 
-account_schema = {
+location_schema = {
     "type": "object",
     "properties": {
         "name": {
             "type": "string",
         },
-        "userProfile":{
-            "type" : "string",
-            "enum" : ["Supplier", "Seller"]
+        "address":{
+            "type": "string"
         },
-        "userId":{
+        "locationProfile":{
+            "type" : "string",
+            "enum" : ["Warehouse", "Residential"]
+        },
+        "accountId":{
             "type": "string"
         }
 
     },
-    "required": ["name", "userProfile", "userId"],
+    "required": ["name", "address", "locationProfile", "accountId"],
     "additionalProperties": False
 }
 
 
-def validate_account(data):
+def validate_location(data):
     try:
-        validate(data, account_schema)
+        validate(data, location_schema)
     except ValidationError as e:
         return {'ok': False, 'message': e}
     except SchemaError as e:
