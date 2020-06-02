@@ -99,7 +99,7 @@ def register():
             if data['password'] != None: 
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
-
+            data["createdAT"] = datetime.datetime.utcnow()            
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:
@@ -129,6 +129,7 @@ def users():
             if 'password' in data:
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
+            data["createdAT"] = datetime.datetime.utcnow()
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:
@@ -165,6 +166,7 @@ def user(id):
             if 'password' in data:            
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
+            data["updatedAT"] = datetime.datetime.utcnow()        
             db_response = mongo.db.users.update_one({"_id":ObjectId(id)}, {'$set':data})
             #print("response",db_response.matched_count)
             if db_response.matched_count > 0:            

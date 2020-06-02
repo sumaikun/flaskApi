@@ -50,7 +50,7 @@ user_schema = {
         }
 
     },
-    "required": ["email", "name", "lastName", "documentType", "documentNumber", "role","userType"],
+    "required": ["email", "name", "lastName", "documentType", "documentNumber", "userRole","userProfile"],
     "additionalProperties": False
 }
 
