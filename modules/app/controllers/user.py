@@ -99,7 +99,7 @@ def register():
             if data['password'] != None: 
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
-
+            data["createdAT"] = datetime.datetime.utcnow()            
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:
@@ -111,7 +111,6 @@ def register():
 @app.route('/users', methods=['GET', 'POST'])
 #@jwt_required
 @check_cognito_header()
-#@check_cognito_user()
 def users():
     ''' example to get extra data from annotation '''
     #print("extraData",request.extraData)
@@ -129,6 +128,7 @@ def users():
             if 'password' in data:
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
+            data["createdAT"] = datetime.datetime.utcnow()
             mongo.db.users.insert_one(data)
             return jsonify({'message': 'User created successfully!'}), 200
         else:
@@ -145,7 +145,7 @@ def user(id):
     if request.method == 'GET':
         query = request.args
         data = mongo.db.users.find_one({"_id":ObjectId(id)})
-        print("data",data)
+        #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200
     
@@ -165,6 +165,7 @@ def user(id):
             if 'password' in data:            
                 data['password'] = flask_bcrypt.generate_password_hash(
                     data['password'])
+            data["updatedAT"] = datetime.datetime.utcnow()        
             db_response = mongo.db.users.update_one({"_id":ObjectId(id)}, {'$set':data})
             #print("response",db_response.matched_count)
             if db_response.matched_count > 0:            
