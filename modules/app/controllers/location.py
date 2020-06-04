@@ -30,6 +30,10 @@ def locations():
             if check != True:
                 return check
 
+            check = checkSimpleForeign("accounts",data['accountId'])
+            if check != True:
+                return check
+
             data["createdAT"] = datetime.datetime.utcnow()
             data["createdBy"] = request.tokenUserId
             mongo.db.locations.insert_one(data)            
@@ -69,6 +73,11 @@ def location(id):
             check = checkSimpleForeign("address",data['address'])
             if check != True:
                 return check
+
+            check = checkSimpleForeign("accounts",data['accountId'])
+            if check != True:
+                return check
+
 
             data["updatedAT"] = datetime.datetime.utcnow()
             data["updatedBy"] = request.tokenUserId   
