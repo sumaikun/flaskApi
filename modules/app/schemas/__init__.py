@@ -6,3 +6,5 @@ from .collection import validate_collection
 from .productType import validate_productType
 from .pricing import validate_pricing
 from .product import validate_product
+from .productVariant import validate_productVariant
+from .address import validate_address

@@ -2,7 +2,7 @@ from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from jsonschema.exceptions import SchemaError
 
-productType_schema = {
+productVariant_schema = {
     "type": "object",
     "properties": {
         "option": {
@@ -32,9 +32,9 @@ productType_schema = {
 }
 
 
-def validate_productType(data):
+def validate_productVariant(data):
     try:
-        validate(data, productType_schema)
+        validate(data, productVariant_schema)
     except ValidationError as e:
         return {'ok': False, 'message': e}
     except SchemaError as e:

@@ -33,16 +33,16 @@ def check_cognito_header():
                     for element in response['UserAttributes']:
 
                         if element['Name'] == 'email':
-                            request.TokenEmail = element['Value']
-                        
-                    rv = f(*args, **kwargs)
-                    return rv
+                            request.TokenEmail = element['Value']  
 
                 except Exception as exc:
                     LOG.error(exc)
                     return jsonify({
                     'message': 'Invalid token'
                 }), 403
+
+                rv = f(*args, **kwargs)
+                return rv
                 
         return decorated_function
     return decorator

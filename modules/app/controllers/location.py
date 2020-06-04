@@ -9,7 +9,7 @@ import json
 from bson.json_util import dumps, loads
 import boto3
 from app.annotations import check_cognito_header, check_cognito_user
-
+from app.helpers import checkSimpleForeign
 
 @app.route('/locations', methods=['GET', 'POST'])
 @check_cognito_header()
@@ -25,6 +25,11 @@ def locations():
         data = validate_location(request.get_json())
         if data['ok']:
             data = data['data']
+
+            check = checkSimpleForeign("address",data['address'])
+            if check != True:
+                return check
+
             data["createdAT"] = datetime.datetime.utcnow()
             data["createdBy"] = request.tokenUserId
             mongo.db.locations.insert_one(data)            
@@ -60,6 +65,11 @@ def location(id):
         data = validate_location(request.get_json())
         if data['ok']:
             data = data['data']
+
+            check = checkSimpleForeign("address",data['address'])
+            if check != True:
+                return check
+
             data["updatedAT"] = datetime.datetime.utcnow()
             data["updatedBy"] = request.tokenUserId   
             db_response = mongo.db.locations.update_one({"_id":ObjectId(id)}, {'$set':data})

@@ -1,0 +1,1 @@
+from .foreignChecker import checkSimpleForeign

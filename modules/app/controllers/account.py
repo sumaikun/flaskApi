@@ -9,6 +9,7 @@ import json
 from bson.json_util import dumps, loads
 import boto3
 from app.annotations import check_cognito_header
+from app.helpers import checkSimpleForeign
 
 
 @app.route('/accounts', methods=['GET', 'POST'])
@@ -25,6 +26,11 @@ def accounts():
         data = validate_account(request.get_json())
         if data['ok']:
             data = data['data']
+
+            check = checkSimpleForeign("users",data['userId'])
+            if check != True:
+                return check
+
             data["createdAT"] = datetime.datetime.utcnow()
             mongo.db.accounts.insert_one(data)            
             return jsonify({'message': 'account created successfully!'}), 200
@@ -58,6 +64,11 @@ def account(id):
         data = validate_account(request.get_json())
         if data['ok']:
             data = data['data']
+
+            check = checkSimpleForeign("users",data['userId'])
+            if check != True:
+                return check
+
             data["updatedAT"] = datetime.datetime.utcnow()   
             db_response = mongo.db.accounts.update_one({"_id":ObjectId(id)}, {'$set':data})
             #print("response",db_response.matched_count)

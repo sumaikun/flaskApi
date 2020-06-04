@@ -11,6 +11,7 @@ import json
 from bson.json_util import dumps, loads
 import boto3
 from app.annotations import check_cognito_header, check_cognito_user
+#from app.helpers import checkSimpleForeign
 
 user_pool_id = os.environ.get('COGNITO_POOL_ID')
 
@@ -145,8 +146,15 @@ def user(id):
     if request.method == 'GET':
         query = request.args
         data = mongo.db.users.find_one({"_id":ObjectId(id)})
-        #print("data",data)
+        #print("data",data)       
         #print("len",len(data))
+        
+        """
+        check = checkSimpleForeign("users",id)
+        if check != True:
+            return check
+        """
+
         return jsonify(data), 200
     
     if request.method == 'DELETE':

@@ -35,7 +35,7 @@ def address():
 @app.route('/address/<id>', methods=['GET', 'DELETE','PUT'])
 @check_cognito_header()
 @check_cognito_user()
-def address(id):
+def addressbyId(id):
     
     #print("id",id)
     #print("args",request.args)
