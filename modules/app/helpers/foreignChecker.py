@@ -8,3 +8,12 @@ def checkSimpleForeign(collection,id):
     if data is None:
         return jsonify({'message': 'invalid id for collection '+collection}), 400
     return True
+
+def checkArrayForeign(collection,ids):
+
+    for id in ids:
+        data = mongo.db[collection].find_one({"_id":ObjectId(id)})    
+        if data is None:
+            return jsonify({'message': 'invalid id for collection '+collection}), 400
+                
+    return True

@@ -9,13 +9,13 @@ product_schema = {
             "type": "string",
         },
         "collections":{
-            "type": ["string", "null"]
+            "type": "array",
         },
         "productType":{
             "type": "string",
         },
         "tags":{
-            "type": ["string", "null"]
+            "type": ["array", "null"]
         },
         "description": {
             "type": "string",
@@ -33,7 +33,7 @@ product_schema = {
             "type": "number",
         },        
         "media": {
-             "type": ["string", "null"],
+             "type": ["array", "null"],
         },        
         "accountId": {
              "type": "string",

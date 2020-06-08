@@ -9,7 +9,7 @@ import json
 from bson.json_util import dumps, loads
 import boto3
 from app.annotations import check_cognito_header, check_cognito_user
-from app.helpers import checkSimpleForeign
+from app.helpers import checkSimpleForeign, checkArrayForeign
 
 @app.route('/products', methods=['GET', 'POST'])
 @check_cognito_header()
@@ -29,6 +29,10 @@ def products():
             check = checkSimpleForeign("accounts",data['accountId'])
             if check != True:
                 return check
+
+            check = checkArrayForeign("collections",data['collections'])
+            if check != True:
+                return check            
 
             data["createdAT"] = datetime.datetime.utcnow()
             data["createdBy"] = request.tokenUserId

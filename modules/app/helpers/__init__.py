@@ -1,1 +1,1 @@
-from .foreignChecker import checkSimpleForeign
+from .foreignChecker import checkSimpleForeign, checkArrayForeign
