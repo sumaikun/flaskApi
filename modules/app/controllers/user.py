@@ -118,8 +118,8 @@ def users():
     ''' route read user '''
     if request.method == 'GET':
         query = request.args
-        data = json.loads(dumps(mongo.db.users.find()))
-        #print("data",data)
+        data = json.loads(dumps(mongo.db.users.aggregate([{'$addFields': {"_id": { '$toString':'$_id'}}}])))
+        print("data",data)
         #print("len",len(data))
         return jsonify(data), 200
     if request.method == 'POST':

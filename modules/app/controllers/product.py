@@ -17,7 +17,7 @@ from app.helpers import checkSimpleForeign, checkArrayForeign
 def products():
     if request.method == 'GET':
         query = request.args
-        data = json.loads(dumps(mongo.db.products.find()))
+        data = json.loads(dumps(mongo.db.products.aggregate([{'$addFields': {"_id": { '$toString':'$_id'}}}])))
         #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200

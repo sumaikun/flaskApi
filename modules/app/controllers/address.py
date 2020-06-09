@@ -17,7 +17,7 @@ from app.annotations import check_cognito_header, check_cognito_user
 def address():
     if request.method == 'GET':
         query = request.args
-        data = json.loads(dumps(mongo.db.address.find()))
+        data = json.loads(dumps(mongo.db.address.aggregate([{'$addFields': {"_id": { '$toString':'$_id'}}}])))
         #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200

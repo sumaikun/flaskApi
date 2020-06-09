@@ -17,7 +17,7 @@ from app.helpers import checkSimpleForeign
 def productVariants():
     if request.method == 'GET':
         query = request.args
-        data = json.loads(dumps(mongo.db.productVariants.find()))
+        data = json.loads(dumps(mongo.db.productVariants.aggregate([{'$addFields': {"_id": { '$toString':'$_id'}}}])))
         #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200

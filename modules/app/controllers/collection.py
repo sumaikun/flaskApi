@@ -18,7 +18,7 @@ from app.helpers import checkSimpleForeign
 def collections():
     if request.method == 'GET':
         query = request.args
-        data = json.loads(dumps(mongo.db.collections.find()))
+        data = json.loads(dumps(mongo.db.collections.aggregate([{'$addFields': {"_id": { '$toString':'$_id'}}}])))
         #print("data",data)
         #print("len",len(data))
         return jsonify(data), 200

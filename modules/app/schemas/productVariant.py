@@ -21,7 +21,7 @@ productVariant_schema = {
             "type": "string",
         },
         "media":{
-            "type": ["string", "null"]
+            "type": ["array", "null"]
         },
         "accountId":{
             "type": "string"
